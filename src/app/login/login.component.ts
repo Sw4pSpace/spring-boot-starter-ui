@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
+import {AuthService} from '../core/service/auth.service';
 
 export interface User {
   username: string;
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   loading = false;
 
-  constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.http.post('http://localhost:8080/login', {username: this.f.username.value, password: this.f.password.value}).subscribe((data: User) => {
+    this.authService.login(this.f.username.value, this.f.password.value).add(() => {
+      this.loading = false;
       this.router.navigate(['quiz']);
     });
   }

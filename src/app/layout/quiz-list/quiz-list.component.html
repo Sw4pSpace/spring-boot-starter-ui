@@ -1,0 +1,25 @@
+<div class="center-container">
+  <div class="width--50pct">
+    <table class="table table-hover">
+      <caption>Pick a quiz</caption>
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Due Date</th>
+        <th scope="col">Tries left</th>
+        <th scope="col"></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let quiz of quizzes">
+        <th scope="row">{{quiz.id}}</th>
+        <td>{{quiz.name}}</td>
+        <td>{{quiz.dueDate | date:'yyyy-MM-dd hh:mm:ss a Z'}}</td>
+        <td>3</td>
+        <td><button type="button" class="btn btn-primary" routerLink="/quiz/take" [queryParams]="{id: quiz.id}">Take Quiz</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
