@@ -17,12 +17,18 @@ export class RegisterComponent implements OnInit {
 
   constructor(private http: HttpClient, private formBuilder: FormBuilder, private router: Router) { }
 
+  static checkPasswords(group: FormGroup) {
+    const pass = group.get('password').value;
+    const cPass = group.get('cpassword').value;
+    return pass === cPass ? null : {notSame: true};
+  }
+
   ngOnInit() {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', Validators.required],
-      cpassword: ['', Validators.required]
-    });
+      cpassword: ['']
+    }, {validator: RegisterComponent.checkPasswords});
   }
 
   get f() {

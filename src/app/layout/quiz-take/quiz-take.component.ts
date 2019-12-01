@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {AuthService} from '../../core/service/auth.service';
+import {Quiz} from "../../core/model/models";
 
 @Component({
   selector: 'app-quiz-take',
@@ -33,7 +34,7 @@ export class QuizTakeComponent implements OnInit {
 
   loadQuiz(): void {
     this.quizLoading = true;
-    this.http.get('http://localhost:8080/quiz/' + this.quizId).subscribe(data => {
+    this.http.get('http://localhost:8080/quiz/' + this.quizId).subscribe((data: Quiz) => {
       this.quiz = data;
       this.totalQuestions = data.questions.length;
       this.quizLoading = false;
